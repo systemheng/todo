@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-image: url(bgimg.jpeg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .all{
+            height: 100vh;
+            width: 100vw;
+            /* background-image: url(bgimg.jpeg);
+            background-size: cover;
+            background-repeat: no-repeat; */
+            place-items: center;
+        }
+        .nav{
+            height: 20vh;
+            width: 100vw;
+            /* border: 2px  solid black; */
+            display: grid;
+            place-items: center;
+            grid-template-columns: 10% 80% 10%;
+            grid-template-rows: 100%;
+
+        }
+        .taskcreator{
+            height: 20vh;
+            width: 100vw;
+            padding: 2%;
+
+            display: grid;
+            grid-template-columns: 18% 80%;
+            grid-template-rows: 100%;
+            align-items: center;
+            gap: 3px;
+        }
+        .Addtask{
+            background-color: transparent;
+            border: none;
+            position: relative;
+            left: 10%;
+           
+        }
+        @media screen and (min-width: 500px) {
+          #imginbtn{
+            height: 30%;
+            width: 30%;
+          }
+        }
+        #inputTaker{
+            padding: 30px;
+            height: 60%;
+            border-radius: 28px;
+            border: none;
+            background: rgba(255, 255, 255, 0.164);
+            box-shadow:  5px 5px 14px #cacaca,
+             -5px -5px 14px #f6f6f6;
+             color: white;
+             font-size: 20px;
+             font-family: "Baloo 2";
+             text-transform: capitalize;
+
+        }
+        @media screen and (max-width: 500px) {
+            #inputTaker{
+                height: 37%;
+         
+            }
+        }
+        .taskcontainer{
+            padding: 10px;
+            /* height: 50vh; */
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            /* overflow-y:scroll; */
+            /* border: 2px  solid black; */
+        }
+        .tasks{
+            font-family: "Baloo 2";
+            color: rgba(255, 255, 255, 0.314);
+            width: 85%;
+            min-height: 100px;
+            /* height: 100px; */
+            padding: 8px;
+            /* border: 2px solid #39FF14; */
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+;
+
+        }
+        .textstyle{
+            font-family: "Baloo 2";
+            color: white;
+            font-size: 30px;
+           overflow: wrap;
+        }
+    </style>
+</head>
+<body>
+  <div class="all" id="maindiv">
+    <div class="nav">
+        <img src="task-list-svgrepo-com.svg" alt="" srcset="" height="48%" width="70%">
+        <img src="TO do list .svg" alt="" srcset=""height="70%" width="100%">
+        <img src="question-mark-outline-svgrepo-com.svg" alt="" srcset=""height="48%" width="70%">
+        
+    </div>
+    <div class="taskcreator">
+        <button class="Addtask" id="Addtask"><img src="add-button-svgrepo-com.svg" alt="" srcset="" height="60%" width="60%" id="imginbtn"></button>
+        <input type="text"id="inputTaker" placeholder="Add your task">
+    </div>
+    <div class="taskcontainer" id="taskcontainer"></div>
+</div>
+    <script>
+        const TaskAdder=document.getElementById("Addtask")
+        let listcontain=document.getElementById("taskcontainer")
+        let heightmanage=document.getElementById("maindiv")
+        let forreset=document.getElementById("inputTaker")
+        let a=0;
+        let b=100;
+        TaskAdder.addEventListener("click", ()=>{
+
+if(forreset.value!='')
+{
+            let inputval=document.getElementById("inputTaker").value
+             let ournode=document.createTextNode(inputval)
+            a++
+            let idmaker="task"+a
+            console.log(idmaker)
+            let para=document.createElement('p')
+            let div=document.createElement('div')
+            div.setAttribute("class","textstyle")
+            para.id=idmaker
+            para.setAttribute("class","tasks")
+            para.innerText="Your task"+" is" +" "
+            div.appendChild(ournode)
+            para.appendChild(div)
+            listcontain.appendChild(para)
+               forreset.value=''
+               localStorage.setItem("value of a",a)
+             let storer=listcontain.innerHTML
+             localStorage.setItem("store", storer)
+             let numb = listcontain.childElementCount;
+            localStorage.setItem("value", numb)
+            localStorage.setItem('node'+numb,inputval)
+            
+            console.log(localStorage.getItem('node'+a))
+
+}
+else
+{
+    window.alert("plz enter your task first")
+}
+        })
+window.addEventListener("load",()=>{
+    let p= parseInt(localStorage.getItem("value"))
+    let q=p-parseInt(localStorage.getItem("value of a"))
+           for(let r=1;r<=p;r++){
+            let para =document.createElement('p')
+            let div=document.createElement('div')
+            div.setAttribute("class","textstyle")
+            listcontain.append(para)
+            // a++
+            let idmaker="task"+r
+            para.id=idmaker
+            para.innerText="Your task"+" is" +" "
+            let z=(localStorage.getItem('node'+r))
+            let y=document.createTextNode(z)
+            console.log(z)
+            div.appendChild(y)
+            para.appendChild(div)
+            para.setAttribute("class","tasks")
+           
+           }
+})
+
+    </script>
+</body>
+</html>
